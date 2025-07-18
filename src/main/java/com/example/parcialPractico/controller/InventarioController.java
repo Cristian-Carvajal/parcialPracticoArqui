@@ -25,8 +25,8 @@ public class InventarioController {
     @MutationMapping
     public Inventario registrarProductoEnInventario(
             @Argument("producto")ProductoNuevo productoNuevo,
-            @Argument Long AlmacenId,
-            @Argument int cantidadInicial) {
-        return inventarioService.registrarProductoEnInventario(productoNuevo, AlmacenId, cantidadInicial);
+            @Argument("sedeId") Long sedeId,
+            @Argument("cantidadInicial") int cantidadInicial) {
+        return inventarioService.registrarProductoEnInventario(productoNuevo, sedeId, cantidadInicial);
     }
 }

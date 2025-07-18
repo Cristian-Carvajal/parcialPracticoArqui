@@ -10,6 +10,7 @@ import com.example.parcialPractico.repository.ProductoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,8 @@ import java.util.Optional;
 public class InventarioService {
 
     private final InventarioRepository inventarioRepository;
-    private ProductoRepository productoRepository;
-    private AlmacenRepository almacenRepository;
+    private final ProductoRepository productoRepository;
+    private final AlmacenRepository almacenRepository;
 
     public List<Inventario> obtenerInventarioPorSede(Long id) {
         return inventarioRepository.findByAlmacenId(id);
@@ -28,7 +29,7 @@ public class InventarioService {
     public Inventario registrarProductoEnInventario(ProductoNuevo productoNuevo,
                                                     Long AlmacenId, int cantidadInicial) {
         Almacen almacen = almacenRepository.findById(AlmacenId)
-                .orElseThrow(() -> new RuntimeException("No existe el almacen"));
+                .orElseThrow(() -> new EntityNotFoundException("Almacén no encontrado con ID: " + AlmacenId));
 
         Producto producto = productoRepository.findByNombre(productoNuevo.getNombre())
                 .orElseGet(() -> {
