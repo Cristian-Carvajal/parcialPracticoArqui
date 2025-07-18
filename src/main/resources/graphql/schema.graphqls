@@ -1,0 +1,39 @@
+type Producto {
+    id: ID!
+    nombre: String!
+    descripcion: String
+    precioUnitario: Float!
+    categoria: String
+}
+
+type Almacen {
+    id: ID!
+    nombre: String!
+    direccion: String!
+}
+
+type Inventario {
+    id: ID!
+    producto: Producto!
+    cantidad: Int!
+    almacen: Almacen!
+}
+
+input ProductoNuevo {
+    nombre: String!
+    descripcion: String
+    precioUnitario: Float!
+    categoria: String
+}
+
+type Query {
+    inventarioPorSede(sedeId: ID!): [Inventario!]
+}
+
+type Mutation {
+    registrarProductoEnInventario(
+        producto: ProductoNuevo!,
+        sedeId: ID!,
+        cantidadInicial: Int!
+    ): Inventario
+}
